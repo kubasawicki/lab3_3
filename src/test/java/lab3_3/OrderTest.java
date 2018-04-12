@@ -11,11 +11,6 @@ public class OrderTest {
 	Order order;
 	OrderItem item;
 
-	@Before
-	public void setUp() {
-
-	}
-
 	@Test(expected = OrderExpiredException.class)
 	public void OrderExpiredExceptionTest() {
 		order = new Order();
