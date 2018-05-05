@@ -4,11 +4,16 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.iis.mto.time.*;
+
 public class OrderTests {
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
+	@Test(expected = OrderExpiredException.class)
+	public void confirmOrderShouldThrowOrderExpiredException() {
+		
+		Order order = new Order();
+		order.submit();
+		order.confirm(new FakeClock());
 	}
 
 }
