@@ -32,12 +32,14 @@ public class Order {
 
 	}
 
-	public void confirm() {
+	public void confirm(ClockInterface clock) {
 		requireState(State.SUBMITTED);
-		int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, new DateTime()).getHours();
+		int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, new DateTime(clock.currentTimeMillis())).getHours();
 		if(hoursElapsedAfterSubmittion > VALID_PERIOD_HOURS){
 			orderState = State.CANCELLED;
 			throw new OrderExpiredException();
+		} else {
+			orderState = State.CONFIRMED;
 		}
 	}
 
