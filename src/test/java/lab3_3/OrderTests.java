@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import edu.iis.mto.time.*;
+import edu.iis.mto.time.Order.State;
+
+import static org.hamcrest.core.Is.is;
 
 public class OrderTests {
 
@@ -15,5 +18,4 @@ public class OrderTests {
 		order.submit();
 		order.confirm(new FakeClock());
 	}
-
 }
