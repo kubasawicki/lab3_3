@@ -31,7 +31,7 @@ public class Order {
     public void submit() {
         requireState( State.CREATED );
         orderState = State.SUBMITTED;
-        subbmitionDate = new DateTime();
+        subbmitionDate = new DateTime(time.getCurrentMillis());
     }
 
     public void confirm() {
