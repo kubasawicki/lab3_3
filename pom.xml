@@ -4,6 +4,10 @@
 	<groupId>edu.iis.mto</groupId>
 	<artifactId>lab3_3</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<powermock.version>1.7.1</powermock.version>
+		<mockito2.version>2.8.9</mockito2.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -26,7 +30,25 @@
 			<artifactId>joda-time</artifactId>
 			<version>2.7</version>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-core</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito2</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+    </dependencies>
 	<build>
 		<plugins>
 			<plugin>
@@ -34,8 +56,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.2</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>8</source>
+					<target>8</target>
 				</configuration>
 			</plugin>
 		</plugins>
