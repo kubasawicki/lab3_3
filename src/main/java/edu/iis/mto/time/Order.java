@@ -11,6 +11,7 @@ public class Order {
 	private State orderState;
 	private List<OrderItem> items = new ArrayList<OrderItem>();
 	private DateTime subbmitionDate;
+	private TimeSrc dateTime = null;
 
 	public Order() {
 		orderState = State.CREATED;
@@ -33,7 +34,7 @@ public class Order {
 
 	public void confirm() {
 		requireState(State.SUBMITTED);
-		int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, FakeTime.getTime()).getHours();
+		int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, getCurrentTime()).getHours();
 		if (hoursElapsedAfterSubmittion > VALID_PERIOD_HOURS) {
 			orderState = State.CANCELLED;
 			throw new OrderExpiredException();
@@ -62,5 +63,21 @@ public class Order {
 
 	public static enum State {
 		CREATED, SUBMITTED, CONFIRMED, REALIZED, CANCELLED
+	}
+
+	public DateTime getCurrentTime() {
+		if (dateTime != null) {
+			return dateTime.getCurrentTime();
+		} else {
+			return new DateTime();
+		}
+	}
+
+	public TimeSrc getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTimeImpl(TimeSrc source) {
+		this.dateTime = source;
 	}
 }
