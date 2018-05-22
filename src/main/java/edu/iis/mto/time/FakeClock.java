@@ -1,12 +1,16 @@
 package edu.iis.mto.time;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import org.joda.time.DateTime;
+
 public class FakeClock implements ClockInterface {
 
-	private static final long TWO_DAYS = 48*60*60*1000;
+	private DateTime dateTime = DateTime.now().plusHours(48);
 	
 	@Override
-	public long currentTimeMillis() {		
-		return System.currentTimeMillis() + TWO_DAYS;
+	public DateTime getDateTime() {
+		return dateTime;
 	}
-
 }
