@@ -8,17 +8,19 @@ public class OrderTest {
 
     OrderItem orderItem;
     Order order;
-
+    FakeTime time = new FakeTime();
     @Before
     public void setUp() {
     }
 
     @Test(expected = OrderExpiredException.class)
     public void testConfirmShouldThrowOrderExpiredException() {
-        order = new Order( new FakeTime().addHours(25) );
+
+        order = new Order( time );
         orderItem = new OrderItem();
         order.addItem( orderItem );
         order.submit();
+        time.addHours( 25 );
         order.confirm();
     }
 
