@@ -14,4 +14,10 @@ public class TrueClock implements ClockInterface {
 		return dateTime;
 	}
 
+	@Override
+	public void addHours(int i) {
+		
+		dateTime = DateTime.now().plusHours(i);		
+	}
+
 }

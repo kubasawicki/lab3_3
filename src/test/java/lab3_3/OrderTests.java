@@ -16,6 +16,6 @@ public class OrderTests {
 		
 		Order order = new Order();
 		order.submit();
-		order.confirm(new FakeClock());
+		order.confirm();
 	}
 }

@@ -10,4 +10,6 @@ public interface ClockInterface {
 	DateTime dateTime = new DateTime();
 	
 	DateTime getDateTime();
+	
+	void addHours(int i);
 }
