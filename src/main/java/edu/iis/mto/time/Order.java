@@ -13,9 +13,9 @@ public class Order {
 	private ClockInterface clock;
 	private DateTime submitionDate;
 
-	public Order() {
+	public Order(TrueClock trueClock) {
 		orderState = State.CREATED;
-		clock = new TrueClock();
+		this.clock = trueClock;
 	}
 
 	public void addItem(OrderItem item) {
@@ -33,7 +33,6 @@ public class Order {
 
 	public void confirm() {
 		requireState(State.SUBMITTED);
-		clock.addHours(25);
 		int hoursElapsedAfterSubmittion = Hours.hoursBetween(submitionDate, clock.getDateTime()).getHours();
 		if(hoursElapsedAfterSubmittion > VALID_PERIOD_HOURS){
 			orderState = State.CANCELLED;
