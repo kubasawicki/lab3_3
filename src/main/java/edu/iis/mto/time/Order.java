@@ -11,6 +11,7 @@ public class Order {
 	private State orderState;
 	private List<OrderItem> items = new ArrayList<OrderItem>();
 	private DateTime subbmitionDate;
+	private Time dateTime = null;
 
 	public Order() {
 		orderState = State.CREATED;
@@ -26,7 +27,6 @@ public class Order {
 
 	public void submit() {
 		requireState(State.CREATED);
-
 		orderState = State.SUBMITTED;
 		subbmitionDate = new DateTime();
 
@@ -34,8 +34,8 @@ public class Order {
 
 	public void confirm() {
 		requireState(State.SUBMITTED);
-		int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, new DateTime()).getHours();
-		if(hoursElapsedAfterSubmittion > VALID_PERIOD_HOURS){
+		int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, getCurrentTime()).getHours();
+		if (hoursElapsedAfterSubmittion > VALID_PERIOD_HOURS) {
 			orderState = State.CANCELLED;
 			throw new OrderExpiredException();
 		}
@@ -49,20 +49,33 @@ public class Order {
 	State getOrderState() {
 		return orderState;
 	}
-	
+
 	private void requireState(State... allowedStates) {
 		for (State allowedState : allowedStates) {
 			if (orderState == allowedState)
 				return;
 		}
-
-		throw new OrderStateException("order should be in state "
-				+ allowedStates + " to perform required  operation, but is in "
-				+ orderState);
-
+		throw new OrderStateException("order should be in state " + allowedStates + " to perform required  operation, but is in " + orderState);
 	}
 
 	public static enum State {
 		CREATED, SUBMITTED, CONFIRMED, REALIZED, CANCELLED
 	}
+	
+	public DateTime getCurrentTime() {
+ 		if (dateTime != null) {
+ 			return dateTime.getCurrentTime();
+ 		} else {
+ 			return new DateTime();
+ 		}
+ 	}
+
+ 	public Time getDateTime() {
+ 		return dateTime;
+ 	}
+
+ 	public void setDateTimeClass(Time source) {
+ 		this.dateTime = source;
+ 	}
+	
 }
