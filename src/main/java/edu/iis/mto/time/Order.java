@@ -7,15 +7,12 @@ import org.joda.time.DateTime;
 import org.joda.time.Hours;
 
 public class Order {
-	public static final int VALID_PERIOD_HOURS = 24;
+	private static final int VALID_PERIOD_HOURS = 24;
 	private State orderState;
 	private List<OrderItem> items = new ArrayList<OrderItem>();
 	private DateTime subbmitionDate;
-	private ExtraDataTime extraDataTime;
 
-	public Order(ExtraDataTime extraDataTime) {
-		this.extraDataTime = extraDataTime;
-
+	public Order() {
 		orderState = State.CREATED;
 	}
 
@@ -31,13 +28,13 @@ public class Order {
 		requireState(State.CREATED);
 
 		orderState = State.SUBMITTED;
-		subbmitionDate = extraDataTime.getTime();
+		subbmitionDate = new DateTime();
 
 	}
 
 	public void confirm() {
 		requireState(State.SUBMITTED);
-		int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, extraDataTime.getTime()).getHours();
+		int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, new DateTime()).getHours();
 		if(hoursElapsedAfterSubmittion > VALID_PERIOD_HOURS){
 			orderState = State.CANCELLED;
 			throw new OrderExpiredException();
