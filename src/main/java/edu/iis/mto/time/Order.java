@@ -49,7 +49,7 @@ public class Order {
 	State getOrderState() {
 		return orderState;
 	}
-	
+
 	private void requireState(State... allowedStates) {
 		for (State allowedState : allowedStates) {
 			if (orderState == allowedState)
