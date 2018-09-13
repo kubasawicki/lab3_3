@@ -7,15 +7,13 @@ import org.joda.time.DateTime;
 import org.joda.time.Hours;
 
 public class Order {
-	public static final int VALID_PERIOD_HOURS = 24;
+	private static final int VALID_PERIOD_HOURS = 24;
 	private State orderState;
 	private List<OrderItem> items = new ArrayList<OrderItem>();
 	private DateTime subbmitionDate;
-	private ExtraDataTime extraDataTime;
+	private Time dateTime = null;
 
-	public Order(ExtraDataTime extraDataTime) {
-		this.extraDataTime = extraDataTime;
-
+	public Order() {
 		orderState = State.CREATED;
 	}
 
@@ -29,16 +27,15 @@ public class Order {
 
 	public void submit() {
 		requireState(State.CREATED);
-
 		orderState = State.SUBMITTED;
-		subbmitionDate = extraDataTime.getTime();
+		subbmitionDate = new DateTime();
 
 	}
 
 	public void confirm() {
 		requireState(State.SUBMITTED);
-		int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, extraDataTime.getTime()).getHours();
-		if(hoursElapsedAfterSubmittion > VALID_PERIOD_HOURS){
+		int hoursElapsedAfterSubmittion = Hours.hoursBetween(subbmitionDate, getCurrentTime()).getHours();
+		if (hoursElapsedAfterSubmittion > VALID_PERIOD_HOURS) {
 			orderState = State.CANCELLED;
 			throw new OrderExpiredException();
 		}
@@ -52,20 +49,33 @@ public class Order {
 	State getOrderState() {
 		return orderState;
 	}
-	
+
 	private void requireState(State... allowedStates) {
 		for (State allowedState : allowedStates) {
 			if (orderState == allowedState)
 				return;
 		}
-
-		throw new OrderStateException("order should be in state "
-				+ allowedStates + " to perform required  operation, but is in "
-				+ orderState);
-
+		throw new OrderStateException("order should be in state " + allowedStates + " to perform required  operation, but is in " + orderState);
 	}
 
 	public static enum State {
 		CREATED, SUBMITTED, CONFIRMED, REALIZED, CANCELLED
 	}
+	
+	public DateTime getCurrentTime() {
+ 		if (dateTime != null) {
+ 			return dateTime.getCurrentTime();
+ 		} else {
+ 			return new DateTime();
+ 		}
+ 	}
+
+ 	public Time getDateTime() {
+ 		return dateTime;
+ 	}
+
+ 	public void setDateTimeClass(Time source) {
+ 		this.dateTime = source;
+ 	}
+	
 }
