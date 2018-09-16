@@ -3,7 +3,6 @@ package edu.iis.mto.time;
  import org.joda.time.DateTime;
 
  public interface Time {
- 	DateTime getCurrentTime();
-
- 	DateTime getForwardTime(int hours);
+ 	public DateTime getCurrentTime();
+ 	public DateTime AddTimeInHours(int hours);
  }

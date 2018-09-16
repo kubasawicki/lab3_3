@@ -6,7 +6,7 @@ public class DateTimeClass implements Time {
 	private static DateTimeClass instance;
 	private static DateTime dateTime;
 
-	public DateTimeClass() {
+	private DateTimeClass() {
 		dateTime = new DateTime();
 	}
 
@@ -22,7 +22,7 @@ public class DateTimeClass implements Time {
 	}
 
 	@Override
-	public DateTime getForwardTime(int hours) {
+	public DateTime AddTimeInHours(int hours) {
 		dateTime = DateTime.now().plusHours(hours);
 		return dateTime;
 	}

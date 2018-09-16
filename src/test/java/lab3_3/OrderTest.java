@@ -14,13 +14,13 @@ public class OrderTest {
 
 	@Test(expected = OrderExpiredException.class)
 	public void OrderExpiredExceptionTest() {
-		Time timesource = new DateTimeClass();
+		Time timesource = DateTimeClass.getTimeSource();
 		order = new Order();
 		item = new OrderItem();
 		order.setDateTimeClass(timesource);
 		order.addItem(item);
 		order.submit();
-		timesource.getForwardTime(25);
+		timesource.AddTimeInHours(25);
 		order.confirm();
 	}
 }
