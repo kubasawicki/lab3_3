@@ -6,6 +6,7 @@ import edu.iis.mto.time.DateTimeClass;
 import edu.iis.mto.time.Order;
 import edu.iis.mto.time.OrderExpiredException;
 import edu.iis.mto.time.OrderItem;
+import edu.iis.mto.time.Time;
 
 public class OrderTest {
 	Order order;
@@ -13,12 +14,13 @@ public class OrderTest {
 
 	@Test(expected = OrderExpiredException.class)
 	public void OrderExpiredExceptionTest() {
+		Time timesource = new DateTimeClass();
 		order = new Order();
 		item = new OrderItem();
-		order.setDateTimeClass(DateTimeClass.getTimeSource());
+		order.setDateTimeClass(timesource);
 		order.addItem(item);
 		order.submit();
-		order.getDateTime().getForwardTime(25);
+		timesource.getForwardTime(25);
 		order.confirm();
 	}
 }
